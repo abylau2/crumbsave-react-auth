@@ -1,0 +1,17 @@
+body{line-height:1.6}
+h1,h2,h3{letter-spacing:-.02em}
+em{font-weight:500;letter-spacing:-.02em}
+.hero h1,.page-intro h1,.page-state h1,.detail-info h1,.section-header h1,.section-header h2,.how-intro h2,.closing-inner h2,.form-side h2,.form-success h2,.about-columns h2{font-family:var(--font-editorial);font-weight:500;letter-spacing:-.035em;line-height:1.1;font-optical-sizing:auto;text-wrap:balance}
+.hero h1{font-size:clamp(50px,4.8vw,68px);line-height:1.06;letter-spacing:-.04em}
+.hero h1 em{font-weight:500;letter-spacing:inherit}
+.hero-lead{line-height:1.65}
+.brand{letter-spacing:-.045em}
+.nav-link{font-weight:600;letter-spacing:-.01em}
+.eyebrow{letter-spacing:.13em}
+.bag-card h3,.reservation-card h2,.step h3,.form-section-title h3,.breakdown h2{font-family:var(--font-body);font-weight:600;letter-spacing:-.02em;line-height:1.25}
+.bag-card h3{line-height:1.25}
+.bag-origin,.bag-pickup,.detail-description{line-height:1.6}
+.step-number,.section-number,.not-found-number{font-family:var(--font-editorial);font-style:normal;font-weight:500;letter-spacing:-.03em}
+.kpi strong,.prices strong,.reservation-price strong{font-variant-numeric:tabular-nums;letter-spacing:-.025em}
+@media(max-width:700px){.hero h1{font-size:clamp(39px,9.8vw,55px)}.page-intro h1{font-size:clamp(38px,8.4vw,48px)}.detail-info h1{font-size:clamp(34px,8vw,43px)}.section-header h1,.section-header h2{font-size:35px}}
+@media(max-width:430px){.hero h1{font-size:clamp(36px,10vw,43px)}.form-side h2{font-size:31px}}

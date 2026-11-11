@@ -1,0 +1,4 @@
+@font-face{font-family:'Instrument Sans';src:url('/fonts/instrument-sans-latin.woff2') format('woff2');font-style:normal;font-weight:400 700;font-display:swap}
+@font-face{font-family:'Fraunces';src:url('/fonts/fraunces-latin.woff2') format('woff2');font-style:normal;font-weight:400 700;font-display:swap}
+@font-face{font-family:'Fraunces';src:url('/fonts/fraunces-italic-latin.woff2') format('woff2');font-style:italic;font-weight:400 700;font-display:swap}
+:root{--forest:#183D32;--ivory:#F7F6F1;--white:#FFFFFF;--sage:#E8EDDF;--pistachio:#DDECB8;--terracotta:#BF684B;--charcoal:#202820;--muted:#6C786F;--border:#DFE4D9;--font-body:'Instrument Sans',Arial,sans-serif;--font-editorial:'Fraunces',Georgia,serif;--container:1200px;--control-height:42px;--card-radius:13px;--control-radius:8px;--ease:cubic-bezier(.2,.65,.25,1)}
