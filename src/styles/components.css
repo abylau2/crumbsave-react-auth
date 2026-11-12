@@ -27,7 +27,17 @@
 .clear-button:hover{text-decoration:underline;text-underline-offset:3px}
 .bag-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .bag-card{min-width:0;display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border);border-radius:var(--card-radius);overflow:hidden;transition:border-color .2s var(--ease)}
-.bag-card:hover{border-color:#aebfa9}
+.bag-card{transition:border-color .2s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease);animation:card-in .5s var(--ease) backwards}
+.bag-card:hover{border-color:#aebfa9;transform:translateY(-5px);box-shadow:0 14px 28px rgba(24,61,50,.12)}
+.bag-grid>.bag-card:nth-child(1){animation-delay:0ms}.bag-grid>.bag-card:nth-child(2){animation-delay:60ms}.bag-grid>.bag-card:nth-child(3){animation-delay:120ms}.bag-grid>.bag-card:nth-child(4){animation-delay:180ms}.bag-grid>.bag-card:nth-child(5){animation-delay:240ms}.bag-grid>.bag-card:nth-child(6){animation-delay:300ms}.bag-grid>.bag-card:nth-child(7){animation-delay:360ms}.bag-grid>.bag-card:nth-child(8){animation-delay:420ms}.bag-grid>.bag-card:nth-child(9){animation-delay:480ms}.bag-grid>.bag-card:nth-child(n+10){animation-delay:540ms}
+@keyframes card-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.card-action svg{transition:transform .2s var(--ease)}
+.bag-card:hover .card-action svg{transform:translate(3px,-3px)}
+.just-reserved{animation:reserved-pop .6s var(--ease)}
+@keyframes reserved-pop{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(24,61,50,.45)}35%{transform:scale(1.04)}100%{transform:scale(1);box-shadow:0 0 0 18px rgba(24,61,50,0)}}
+.check-pop{display:inline-block;vertical-align:-3px;margin-right:6px;stroke-dasharray:26;stroke-dashoffset:26;animation:check-draw .5s .15s var(--ease) forwards}
+@keyframes check-draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.bag-card,.just-reserved,.check-pop{animation:none}.check-pop{stroke-dashoffset:0}.bag-card:hover{transform:none}}
 .bag-image-link{display:block;position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--sage)}
 .bag-image-link img{width:100%;height:100%;object-fit:cover;transition:transform .2s var(--ease)}
 .bag-card:hover .bag-image-link img{transform:scale(1.02)}
