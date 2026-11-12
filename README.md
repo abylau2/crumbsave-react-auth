@@ -15,6 +15,7 @@ This is homework 6. I added Firebase login and data caching to my previous proje
 - Sign up and log in with email and password, or with Google
 - Profile page (only for logged in users) with email and UID
 - Log out
+- Small animations (cards appear one by one, hover effect, reserve button). They are turned off if the system has "reduce motion" on
 
 The navigation bar changes: when you are logged out you see Login and Signup, when you are logged in you see Profile and Logout.
 
@@ -103,7 +104,7 @@ The code for this is in `src/lib/queryClient.js` (times), `src/hooks/queries.js`
 
 | Route | What it is |
 |---|---|
-| `/` | Home page |
+| `/` | Home page. It has the About section: the About link in the header scrolls to it |
 | `/about` | About the project |
 | `/bags` | Catalog with filters and pages |
 | `/bags/:id` | One bag, reserve button |
