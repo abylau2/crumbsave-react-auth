@@ -17,7 +17,7 @@ with sync_playwright() as playwright:
     page.on('response', lambda response: bad_responses.append(f'{response.status} {response.url}') if response.status >= 400 else None)
     page.goto(BASE + '/bags', wait_until='networkidle')
     expect(page.locator('.bag-card')).to_have_count(12)
-    expect(page.locator('.result-count')).to_contain_text('120 bags found')
+    expect(page.locator('.result-count')).to_contain_text('52 bags found')
     first_page_ids = page.locator('.bag-card h3').all_text_contents()
     assert first_page_ids == [
         'Ichiraku Ramen', 'Krabby Patty', "Howl's Moving Breakfast", "Luffy's Meat on the Bone",
@@ -25,7 +25,7 @@ with sync_playwright() as playwright:
         "Ponyo's Ham Ramen", 'The Cake Is a Lie', "Garfield's Lasagna", 'Skyrim Sweetroll',
     ]
     assert len(set(page.locator('.bag-card img').evaluate_all('(images) => images.map((image) => image.getAttribute("src"))'))) == 12
-    print('PASS initial 120 records, 12 cards')
+    print('PASS initial 52 records, 12 cards')
     page.get_by_role('link', name='How it works').first.click()
     page.wait_for_timeout(350)
     assert abs(page.locator('#how-it-works').bounding_box()['y']) < 80
@@ -34,15 +34,15 @@ with sync_playwright() as playwright:
     print('PASS landing anchor and catalog navigation')
 
     page.get_by_role('button', name='Bakery', exact=True).click()
-    expect(page.locator('.result-count')).to_contain_text('20 bags found')
-    expect(page.locator('.bag-card .category-label')).to_have_text(['Bakery'] * 12)
+    expect(page.locator('.result-count')).to_contain_text('8 bags found')
+    expect(page.locator('.bag-card .category-label')).to_have_text(['Bakery'] * 8)
     page.get_by_role('searchbox').fill('Homer')
-    expect(page.locator('.result-count')).to_contain_text('bags found')
+    expect(page.locator('.result-count')).to_contain_text('found')
     assert page.locator('.bag-card').count() > 0
     page.get_by_role('searchbox').fill('zzzz-no-food')
     expect(page.get_by_text('No bags found.')).to_be_visible()
     page.get_by_role('button', name='Clear filters').last.click()
-    expect(page.locator('.result-count')).to_contain_text('120 bags found')
+    expect(page.locator('.result-count')).to_contain_text('52 bags found')
     print('PASS combined filters, search, empty and clear')
 
     page.get_by_role('button', name='Page 2').click()
@@ -89,7 +89,7 @@ with sync_playwright() as playwright:
     page.reload(wait_until='networkidle')
     expect(page.get_by_role('heading', level=1)).to_contain_text('A Lovely Bakery Surprise')
     page.goto(BASE + '/bags')
-    expect(page.locator('.result-count')).to_contain_text('121 bags found')
+    expect(page.locator('.result-count')).to_contain_text('53 bags found')
     print('PASS controlled form, validation, creation, persistence')
 
     page.evaluate("sessionStorage.setItem('crumbsave:fail-next', 'getBags')")

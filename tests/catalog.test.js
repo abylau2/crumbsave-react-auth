@@ -26,13 +26,13 @@ const goodValues = {
   originalPrice: '5000', price: '2100', quantity: '4', pickupStart: '18:00', pickupEnd: '19:30'
 };
 
-test('120 varied, valid seed records have unique IDs and local images', () => {
-  assert.equal(seedBags.length, 120);
-  assert.equal(new Set(seedBags.map((bag) => bag.id)).size, 120);
-  assert.equal(new Set(seedBags.map((bag) => bag.title)).size, 120);
-  assert.equal(new Set(seedBags.map((bag) => bag.image)).size, 120);
+test('52 varied, valid seed records have unique IDs and local images', () => {
+  assert.equal(seedBags.length, 52);
+  assert.equal(new Set(seedBags.map((bag) => bag.id)).size, 52);
+  assert.equal(new Set(seedBags.map((bag) => bag.title)).size, 52);
+  assert.equal(new Set(seedBags.map((bag) => bag.image)).size, 52);
   assert.deepEqual(new Set(seedBags.map((bag) => bag.category)), new Set(CATEGORIES));
-  for (const category of CATEGORIES) assert.equal(seedBags.filter((bag) => bag.category === category).length, 20);
+  for (const category of CATEGORIES) assert.ok(seedBags.filter((bag) => bag.category === category).length >= 5);
   assert.ok(seedBags.some((bag) => bag.quantity === 0));
   assert.ok(seedBags.some((bag) => bag.price > 4000));
   assert.deepEqual(seedBags.slice(0, 12).map((bag) => bag.title), [
@@ -69,9 +69,9 @@ test('price boundaries, sorting and pagination are deterministic', () => {
   const first = paginate(ascending, 1);
   const second = paginate(ascending, 2);
   assert.equal(first.items.length, 12);
-  assert.equal(first.pageCount, 10);
+  assert.equal(first.pageCount, 5);
   assert.notEqual(first.items[0].id, second.items[0].id);
-  assert.equal(paginate(ascending, 100).currentPage, 10);
+  assert.equal(paginate(ascending, 100).currentPage, 5);
 });
 
 test('featured pages keep the first picks and avoid repeated food images', () => {
@@ -93,7 +93,7 @@ test('form validates required fields, price relation, quantity and time', () => 
 });
 
 test('API seeds once and respects a stored empty array', async () => {
-  assert.equal((await getBags()).length, 120);
+  assert.equal((await getBags()).length, 52);
   const stored = JSON.parse(localStorage.getItem(demoStorageKey));
   stored.bags = [];
   localStorage.setItem(demoStorageKey, JSON.stringify(stored));
@@ -105,22 +105,25 @@ test('catalog migration replaces generic seed and keeps created bags and old res
   const oldReservation = { id: 'reservation-old', bagId: 'seed-001', title: 'Old bag', price: 1000, image: '/images/croissants.jpg' };
   localStorage.setItem(demoStorageKey, JSON.stringify({ bags: [{ ...created, id: 'seed-001' }, created], reservations: [oldReservation] }));
   const migrated = await getBags();
-  assert.equal(migrated.length, 121);
+  assert.equal(migrated.length, 53);
   assert.equal(migrated.filter((bag) => bag.id === created.id).length, 1);
   assert.equal(migrated.some((bag) => bag.id === 'seed-001'), false);
   assert.equal((await getReservations())[0].archived, true);
-  assert.equal(JSON.parse(localStorage.getItem(demoStorageKey)).catalogVersion, 3);
+  assert.equal(JSON.parse(localStorage.getItem(demoStorageKey)).catalogVersion, 4);
 });
 
-test('catalog image migration preserves inventory and reservations', async () => {
-  const reservedBag = { ...seedBags[12], image: '/images/fan-food/old-image.webp', quantity: 2 };
-  const reservation = { id: 'reservation-existing', bagId: reservedBag.id, image: reservedBag.image };
-  localStorage.setItem(demoStorageKey, JSON.stringify({ catalogVersion: 2, bags: [reservedBag], reservations: [reservation] }));
-  const [migrated] = await getBags();
-  assert.equal(migrated.id, reservedBag.id);
-  assert.equal(migrated.quantity, 2);
-  assert.equal(migrated.image, seedBags[12].image);
-  assert.equal((await getReservations())[0].image, seedBags[12].image);
+test('catalog version 4 migration replaces old seeded listings, keeps created bags and archives their reservations', async () => {
+  const oldSeeded = { ...seedBags[12], id: 'fan-099', quantity: 2 };
+  const created = { ...seedBags[0], id: 'bag-mine', title: 'My own bag' };
+  const reservation = { id: 'reservation-existing', bagId: oldSeeded.id, title: oldSeeded.title };
+  localStorage.setItem(demoStorageKey, JSON.stringify({ catalogVersion: 3, bags: [oldSeeded, created], reservations: [reservation] }));
+  const bags = await getBags();
+  assert.equal(bags.length, 53);
+  assert.ok(bags.some((bag) => bag.id === 'bag-mine'));
+  assert.ok(!bags.some((bag) => bag.id === 'fan-099'));
+  const [saved] = await getReservations();
+  assert.equal(saved.archived, true);
+  assert.equal(saved.title, oldSeeded.title);
 });
 
 test('API creates a bag, persists it and rejects malformed data', async () => {
@@ -128,7 +131,7 @@ test('API creates a bag, persists it and rejects malformed data', async () => {
   const bag = await createBag(normalizeBag(goodValues));
   assert.match(bag.id, /^bag-/);
   assert.equal((await getBagById(bag.id)).title, goodValues.title);
-  assert.equal((await getBags()).length, 121);
+  assert.equal((await getBags()).length, 53);
 });
 
 test('reservation decrements inventory once and persists a snapshot', async () => {
@@ -145,7 +148,7 @@ test('reservation decrements inventory once and persists a snapshot', async () =
 test('transient failures recover and aborted requests do not complete', async () => {
   sessionStorage.setItem(demoFailNextKey, 'getBags');
   await assert.rejects(getBags(), { code: 'SIMULATED_FAILURE' });
-  assert.equal((await getBags()).length, 120);
+  assert.equal((await getBags()).length, 52);
   const controller = new AbortController();
   const request = getBags({ signal: controller.signal });
   controller.abort();

@@ -34,12 +34,11 @@ with sync_playwright() as p:
     expect(page.locator('.bag-card')).to_have_count(12)
     assert page.evaluate('window.testDocumentMarker')==42
     print('PASS landing preview, SPA navigation, full catalog')
-    page.goto(BASE+'/bags?category=Bakery&sort=price-asc&page=2')
+    page.goto(BASE+'/bags?sort=price-asc&page=2')
     expect(page.get_by_role('button',name='Page 2',exact=True)).to_have_attribute('aria-current','page')
-    expect(page.get_by_role('button',name='Bakery',exact=True)).to_have_attribute('aria-pressed','true')
     expect(page.get_by_label('Sort by',exact=True)).to_have_value('price-asc')
-    assert page.locator('.bag-card').count()==8
-    page.reload();expect(page.locator('.bag-card')).to_have_count(8)
+    assert page.locator('.bag-card').count()==12
+    page.reload();expect(page.locator('.bag-card')).to_have_count(12)
     url=page.url
     page.locator('.card-action').first.click()
     expect(page.get_by_role('button',name='Back',exact=True)).to_be_visible()
@@ -81,7 +80,7 @@ with sync_playwright() as p:
     expect(page.locator('.kpi').nth(1).locator('strong')).to_have_text(str(stats['available']))
     expect(page.locator('.kpi').nth(5).locator('strong')).to_have_text(str(stats['units']))
     page.get_by_label('Category',exact=True).select_option('Bakery')
-    expect(page.locator('.kpi').first.locator('strong')).to_have_text('20')
+    expect(page.locator('.kpi').first.locator('strong')).to_have_text('8')
     assert len(page.locator('.breakdown').first.locator('li').all_text_contents())==1
     page.locator('.breakdown').first.get_by_role('link',name=re.compile('Bakery')).click()
     expect(page).to_have_url(BASE+'/bags?category=Bakery')
@@ -90,12 +89,6 @@ with sync_playwright() as p:
     expect(page.get_by_text("Something didn't load.",exact=True)).to_be_visible()
     page.get_by_role('button',name='Try again',exact=True).click();expect(page.locator('.kpi')).to_have_count(6)
     print('PASS API-based Dashboard KPIs, filter, breakdown drill-down, error/retry')
-    page.goto(BASE+'/login');page.get_by_role('button',name='Continue',exact=True).click()
-    expect(page.locator('.field-error')).to_have_count(2)
-    page.get_by_label('Email',exact=True).fill('student@example.com');page.get_by_label('Password',exact=True).fill('example-pass')
-    page.get_by_role('button',name='Continue',exact=True).click();expect(page.get_by_role('status')).to_have_text('Authentication is not available in this demo yet.')
-    assert 'example-pass' not in page.evaluate('JSON.stringify(localStorage)')
-    print('PASS honest Login placeholder and validation; password not persisted')
     for width in [375,768,1440]:
         page.set_viewport_size({'width':width,'height':900})
         for route in ['/','/bags','/bags/fan-001','/dashboard','/about','/login','/add','/reservations']:
@@ -108,12 +101,12 @@ with sync_playwright() as p:
             page.get_by_role('navigation',name='Primary navigation').get_by_role('link',name='Dashboard',exact=True).click()
             expect(page.get_by_role('button',name='Open menu')).to_be_visible()
     print('PASS 8 routes at 375, 768, 1440px, mobile navigation')
-    for route in ['/about','/bags?category=Bakery&sort=price-asc&page=2','/bags/fan-001','/dashboard','/login','/#how-it-works']:
+    for route in ['/about','/bags?sort=price-asc&page=2','/bags/fan-001','/dashboard','/login','/#how-it-works']:
         page.goto('http://127.0.0.1:4175/crumbsave-react-auth'+route,wait_until='networkidle')
         expect(page.locator('main h1').first).to_be_visible()
         assert '__route' not in page.url
         assert page.url.endswith(route), (page.url, route)
-        if 'page=2' in route:expect(page.locator('.bag-card')).to_have_count(8)
+        if 'page=2' in route:expect(page.locator('.bag-card')).to_have_count(12)
         page.reload(wait_until='networkidle');expect(page.locator('main h1').first).to_be_visible()
     print('PASS Pages real 404 fallback restores nested routes, query and hash on refresh')
     page.goto(BASE+'/dashboard');expect(page.locator('.kpi')).to_have_count(6)

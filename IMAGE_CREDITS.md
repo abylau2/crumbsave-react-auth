@@ -1,6 +1,6 @@
 # Image credits
 
-The following 16 older Unsplash photographs remain in the project for archived reservations and new listings. Their local files are not used by the 120 seeded fan-food listings. The [Unsplash License](https://unsplash.com/license) applies to these 16 photographs only.
+The following 16 older Unsplash photographs remain in the project for archived reservations and new listings. Their local files are not used by the 52 seeded fan-food listings. The [Unsplash License](https://unsplash.com/license) applies to these 16 photographs only.
 
 | Local file | Source |
 |---|---|
@@ -25,7 +25,7 @@ The logo mark in the app is an original SVG drawn for this project. Instrument S
 
 ## Fan-food catalog images
 
-The 52 base images in `public/images/fan-food/` mostly use frames and game images associated with the work named in each concept's `reference` field in `src/data/fanConcepts.js`. Another 68 files ending in `-v1.webp` or `-v2.webp` are closer crops of those same sources for distinct listing variations. The Gordon Ramsay Beef Wellington image is from the official Hell's Kitchen menu. Chaliapin Steak Don uses a real-life recreation, and Gojo's Kikufuku uses a photograph of the actual sweet. These are unofficial academic-demo references. The original works and images belong to their respective rights holders; this project has not established a reuse license for the catalog images. In particular, the Unsplash and Wikimedia licenses previously listed for these file names no longer apply. Source-page records for every image are incomplete; do not present the collection as cleared for commercial use.
+The 52 base images in `public/images/fan-food/` mostly use frames and game images associated with the work named in each concept's `reference` field in `src/data/fanConcepts.js`.  Each listing uses its own image, so no picture repeats. The Gordon Ramsay Beef Wellington image is from the official Hell's Kitchen menu. Chaliapin Steak Don uses a real-life recreation, and Gojo's Kikufuku uses a photograph of the actual sweet. These are unofficial academic-demo references. The original works and images belong to their respective rights holders; this project has not established a reuse license for the catalog images. In particular, the Unsplash and Wikimedia licenses previously listed for these file names no longer apply. Source-page records for every image are incomplete; do not present the collection as cleared for commercial use.
 
 The following download locations were recorded for images added in the final pass. A third-party host may mirror a frame without owning the underlying rights.
 

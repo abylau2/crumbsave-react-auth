@@ -2,7 +2,7 @@ import { categoryImage, seedBags } from '../data/seedBags.js';
 import { normalizeBag, validateBag } from '../utils/validation.js';
 
 const STORAGE_KEY = 'crumbsave:demo:v1';
-const CATALOG_VERSION = 3;
+const CATALOG_VERSION = 4;
 const FAIL_NEXT_KEY = 'crumbsave:fail-next';
 const WAIT_MS = 450;
 
@@ -40,7 +40,7 @@ function readState() {
       );
       state.catalogVersion = 2;
     }
-    if (state.catalogVersion < CATALOG_VERSION) {
+    if (state.catalogVersion < 3) {
       // Update only seeded image paths. Keep each listing's current quantity,
       // user-created records, and existing reservation details.
       const seededImages = new Map(seedBags.map((bag) => [bag.id, bag.image]));
@@ -50,6 +50,18 @@ function readState() {
       state.reservations = state.reservations.map((reservation) => seededImages.has(reservation.bagId)
         ? { ...reservation, image: seededImages.get(reservation.bagId) }
         : reservation);
+      state.catalogVersion = 3;
+    }
+    if (state.catalogVersion < CATALOG_VERSION) {
+      // Version 4: the catalog has one listing per food idea (no repeated pictures).
+      // Replace old seeded listings, keep bags created by the user, and mark
+      // reservations of removed listings as archived (their details stay visible).
+      const hadRecords = state.bags.length > 0;
+      const customBags = state.bags.filter((bag) => !bag.id.startsWith('fan-'));
+      state.bags = hadRecords ? [...customBags, ...copy(seedBags)] : [];
+      state.reservations = state.reservations.map((reservation) =>
+        reservation.bagId?.startsWith('fan-') ? { ...reservation, archived: true } : reservation
+      );
       state.catalogVersion = CATALOG_VERSION;
     }
     if (JSON.stringify(state) !== raw) {

@@ -113,11 +113,11 @@ try:
         check('login returns to the originally requested page', page.url.endswith('/profile'))
 
         # --- previous routes still work
-        for path, heading in [('/', 'Explore'), ('/bags?category=Bakery&page=2', 'Explore'), ('/about', None), ('/dashboard', 'catalog'), ('/add', 'Share'), ('/reservations', 'reservations')]:
+        for path, heading in [('/', 'Explore'), ('/bags?sort=price-asc&page=2', 'Explore'), ('/about', None), ('/dashboard', 'catalog'), ('/add', 'Share'), ('/reservations', 'reservations')]:
             page.goto(BASE + path); page.wait_for_load_state('networkidle')
             check(f'route {path} renders', page.locator('main').inner_text().strip() != '')
-        page.goto(BASE + '/bags?category=Bakery&page=2'); page.wait_for_selector('.bag-grid article, .bag-grid a')
-        check('catalog keeps URL filters and pagination', 'category=Bakery' in page.url and 'page=2' in page.url)
+        page.goto(BASE + '/bags?sort=price-asc&page=2'); page.wait_for_selector('.bag-grid article, .bag-grid a')
+        check('catalog keeps URL filters and pagination', 'sort=price-asc' in page.url and 'page=2' in page.url)
 
         # --- cache: revisiting the catalog shows data instantly (no skeleton)
         page.goto(BASE + '/bags'); page.wait_for_selector('.bag-grid a, .bag-grid article')

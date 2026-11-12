@@ -11,10 +11,10 @@ const firstPage = [
   'garfields-lasagna', 'skyrim-sweetroll'
 ];
 
-const listings = fanConcepts.flatMap((concept) => [
-  { concept, title: concept.title, description: concept.description, variation: 0 },
-  ...(concept.variations ?? []).map(([title, description], index) => ({ concept, title, description, variation: index + 1 }))
-]);
+// One listing for each food idea, so every picture is used only once.
+const listings = fanConcepts.map((concept) => (
+  { concept, title: concept.title, description: concept.description, variation: 0 }
+));
 
 // Lead with twelve recognizable dishes. The rest alternate categories and concepts
 // so variations of one food do not appear next to one another in Featured.
