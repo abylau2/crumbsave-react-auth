@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Hero } from '../components/Hero.jsx';
 import { HowItWorks } from '../components/HowItWorks.jsx';
+import { AboutSection } from '../components/AboutSection.jsx';
 import { BagCard } from '../components/BagCard.jsx';
 import { defaultFilters } from '../components/CatalogControls.jsx';
 import { EmptyState, ErrorState, LoadingSkeleton } from '../components/States.jsx';
@@ -23,6 +24,7 @@ export function HomePage() {
         <Link className="button button-secondary featured-link" to="/bags">Explore all bags <ArrowUpRight size={18} /></Link>
       </>}
     </section>
+    <AboutSection />
     <HowItWorks />
     <section className="closing-banner"><div className="container closing-inner"><div><p className="eyebrow">HAVE SOMETHING GOOD LEFT?</p><h2>Give leftovers <em>a second chance.</em></h2><p>List what's left and help someone find their next meal.</p></div><Link className="button button-light" to="/add">List a surprise bag <ArrowUpRight size={18} /></Link></div></section>
   </>;

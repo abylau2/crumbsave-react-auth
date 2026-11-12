@@ -11,6 +11,13 @@ export function Header() {
   const { user, loading, logout } = useAuth();
   useEffect(() => { setOpen(false); }, [location.pathname, location.hash]);
   const close = () => setOpen(false);
+  const onHome = location.pathname === '/';
+  const onAbout = onHome && location.hash === '#about';
+  // Clicking Home while already on the top of the home page still scrolls up smoothly.
+  function goHome() {
+    close();
+    if (onHome && !location.hash) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   async function handleLogout() {
     close();
     try {
@@ -27,9 +34,9 @@ export function Header() {
         {open ? <X size={24} /> : <Menu size={24} />}
       </button>
       <nav id="primary-navigation" className={`primary-nav ${open ? 'is-open' : ''}`} aria-label="Primary navigation">
-        <NavLink to="/" end onClick={close} className="nav-link">Home</NavLink>
+        <Link to="/" onClick={goHome} className="nav-link" aria-current={onHome && !onAbout ? 'page' : undefined}>Home</Link>
         <NavLink to="/bags" onClick={close} className="nav-link">Explore Bags</NavLink>
-        <NavLink to="/about" onClick={close} className="nav-link">About</NavLink><NavLink to="/dashboard" onClick={close} className="nav-link">Dashboard</NavLink>
+        <Link to="/#about" onClick={close} className="nav-link" aria-current={onAbout ? 'page' : undefined}>About</Link>
         <NavLink to="/reservations" onClick={close} className="nav-link">My reservations</NavLink>
         {loading ? <span className="nav-link nav-auth-loading" aria-hidden="true">…</span> : user ? <>
           <NavLink to="/profile" onClick={close} className="nav-link">Profile</NavLink>

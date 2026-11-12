@@ -98,7 +98,7 @@ with sync_playwright() as p:
                 page.screenshot(path=str(ART/f'routing-{route.strip("/")}-{width}.png'),full_page=True)
         if width==375:
             page.get_by_role('button',name='Open menu').click()
-            page.get_by_role('navigation',name='Primary navigation').get_by_role('link',name='Dashboard',exact=True).click()
+            page.get_by_role('navigation',name='Primary navigation').get_by_role('link',name='About',exact=True).click()
             expect(page.get_by_role('button',name='Open menu')).to_be_visible()
     print('PASS 8 routes at 375, 768, 1440px, mobile navigation')
     for route in ['/about','/bags?sort=price-asc&page=2','/bags/fan-001','/dashboard','/login','/#how-it-works']:

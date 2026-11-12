@@ -25,3 +25,7 @@
   .primary-nav .nav-button{padding:6px 13px;border:1.5px solid var(--border);border-radius:999px;transition:border-color .18s var(--ease),color .18s var(--ease)}
   .primary-nav .nav-button:hover{border-color:var(--forest);color:var(--forest)}
 }
+
+.about-home{padding-top:72px;padding-bottom:24px;scroll-margin-top:24px}
+.about-home .about-columns{margin:0}
+.about-home .text-link{display:inline-flex;align-items:center;gap:5px;margin-top:6px}
