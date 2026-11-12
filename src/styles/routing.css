@@ -17,3 +17,11 @@
 .profile-card{max-width:640px;margin:8px auto 80px;padding:32px;background:var(--white);border:1px solid var(--border);border-radius:var(--control-radius);display:grid;gap:24px}
 .profile-card dl{display:grid;gap:18px;margin:0}.profile-card dt{font-size:13px;color:var(--muted);margin-bottom:4px}.profile-card dd{margin:0;color:var(--forest);font-size:18px;overflow-wrap:anywhere}.profile-card .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}
 .profile-card .button{justify-self:start}
+
+/* Navigation polish (desktop): clear active page, Logout looks like a button */
+@media (min-width:701px){
+  .primary-nav .nav-link{padding-bottom:4px;border-bottom:2px solid transparent}
+  .primary-nav .nav-link[aria-current="page"]{border-bottom-color:var(--terracotta)}
+  .primary-nav .nav-button{padding:6px 13px;border:1.5px solid var(--border);border-radius:999px;transition:border-color .18s var(--ease),color .18s var(--ease)}
+  .primary-nav .nav-button:hover{border-color:var(--forest);color:var(--forest)}
+}
