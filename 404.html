@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Opening CrumbSave…</title></head>
+<body><script>
+(function () {
+  var base = "/crumbsave-react-auth/";
+  var path = location.pathname.startsWith(base) ? location.pathname.slice(base.length - 1) : '/';
+  location.replace(base + '?__route=' + encodeURIComponent(path + location.search + location.hash));
+})();
+</script></body></html>
