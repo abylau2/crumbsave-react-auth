@@ -1,0 +1,32 @@
+/* PWA: connection indicator, banners, update toast, offline page */
+.conn-pill{display:inline-flex;align-items:center;gap:7px;margin-right:auto;padding:5px 11px;border-radius:999px;border:1px solid var(--border);background:var(--white);font-size:12px;font-weight:700;line-height:1;color:var(--forest);white-space:nowrap}
+.conn-dot{width:8px;height:8px;border-radius:50%;background:#3E9A5B;box-shadow:0 0 0 3px rgba(62,154,91,.18)}
+.conn-pill.is-offline{color:#7A3A20;border-color:#E7C6B8;background:#FCEBE5}
+.conn-pill.is-offline .conn-dot{background:var(--terracotta);box-shadow:0 0 0 3px rgba(191,104,75,.2)}
+.conn-banner{background:var(--charcoal);color:var(--ivory);font-size:14px}
+.conn-banner.is-saved{background:#3F4F3F}
+.conn-banner-inner{display:flex;align-items:center;gap:12px;padding-block:10px}
+.conn-banner p{margin:0;flex:1;min-width:0;font-weight:700}
+.conn-banner p span{font-weight:400;opacity:.85}
+.conn-retry{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:6px 13px;border:1px solid rgba(247,246,241,.55);border-radius:8px;background:transparent;color:inherit;font:inherit;font-weight:700;font-size:13px;cursor:pointer}
+.conn-retry:hover:not(:disabled){background:rgba(247,246,241,.12)}
+.conn-retry:disabled{opacity:.7;cursor:wait}
+.update-toast{position:fixed;z-index:60;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(560px,calc(100% - 28px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border-radius:16px;background:var(--forest);color:var(--ivory);box-shadow:0 18px 44px rgba(24,61,50,.32);animation:toast-in .35s var(--ease)}
+.update-toast p{margin:3px 0 0;font-size:13.5px;opacity:.85}
+.update-actions{display:flex;gap:8px;flex:none}
+.update-toast .button-primary{background:var(--pistachio);color:var(--forest)}
+.update-toast .button-plain{color:var(--ivory)}
+@keyframes toast-in{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}
+.install-button{display:inline-flex;align-items:center;gap:7px;border:0;background:none;padding:0;cursor:pointer;font-family:inherit}
+.offline-page{text-align:left}
+.offline-icon{color:var(--terracotta)}
+.offline-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.offline-status{margin-top:18px;min-height:1.6em;color:var(--terracotta);font-weight:600}
+@media (max-width:700px){
+  .conn-pill{margin:0 0 0 10px;padding:6px 10px}
+  .conn-banner-inner{flex-wrap:wrap;gap:8px}.conn-banner p{flex-basis:100%}
+  .update-toast{flex-direction:column;align-items:stretch;gap:12px}.update-actions .button{flex:1}
+  .offline-actions .button{width:100%}
+  .install-button{padding:12px 8px;min-height:44px}
+}
+@media (prefers-reduced-motion:reduce){.update-toast{animation:none}}

@@ -1,5 +1,6 @@
 import { categoryImage, seedBags } from '../data/seedBags.js';
 import { normalizeBag, validateBag } from '../utils/validation.js';
+import { fetchPublicBag, fetchPublicCatalog, mergePublic } from './publicApi.js';
 
 const STORAGE_KEY = 'crumbsave:demo:v1';
 const CATALOG_VERSION = 4;
@@ -113,12 +114,23 @@ async function run(operation, signal, action) {
   return action();
 }
 
+// Public data comes over the network (and from the service worker cache when offline).
+// Stock and bags created by the user live in this browser, so they are merged in.
 export function getBags({ signal } = {}) {
-  return run('getBags', signal, () => copy(readState().bags));
+  return run('getBags', signal, async () => {
+    const remote = await fetchPublicCatalog(signal);
+    const byId = new Map((remote ?? []).map((bag) => [bag.id, bag]));
+    return copy(readState().bags.map((bag) => (byId.has(bag.id) ? mergePublic(bag, byId.get(bag.id)) : bag)));
+  });
 }
 
 export function getBagById(id, { signal } = {}) {
-  return run('getBagById', signal, () => copy(readState().bags.find((bag) => bag.id === id) ?? null));
+  return run('getBagById', signal, async () => {
+    const local = readState().bags.find((bag) => bag.id === id);
+    if (!local) return null;
+    const remote = local.id.startsWith('bag-') ? null : await fetchPublicBag(id, signal);
+    return copy(remote ? mergePublic(local, remote) : local);
+  });
 }
 
 export function getReservations({ signal } = {}) {

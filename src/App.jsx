@@ -14,6 +14,7 @@ const DashboardPage = lazy(() => import('./pages/DashboardPage.jsx'));
 const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
 const SignupPage = lazy(() => import('./pages/SignupPage.jsx'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage.jsx'));
+const OfflinePage = lazy(() => import('./pages/OfflinePage.jsx'));
 
 export default function App() {
   return <Routes><Route element={<RootLayout />}>
@@ -29,6 +30,7 @@ export default function App() {
     </Route>
     <Route path="add" element={<AddBagPage />} />
     <Route path="reservations" element={<ReservationsPage />} />
+    <Route path="offline" element={<OfflinePage />} />
     <Route path="*" element={<NotFoundPage />} />
   </Route></Routes>;
 }

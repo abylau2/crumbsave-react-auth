@@ -1,0 +1,29 @@
+/* Touch-friendly sizes for phones and any device where the main pointer is a finger.
+   Rule of thumb: every tap target is at least 44x44 px. */
+.brand,.menu-toggle{flex:none}
+body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+@media (pointer:coarse),(max-width:700px){
+  :root{--control-height:46px}
+  .brand{min-height:44px}
+  .menu-toggle{min-width:44px}
+  .nav-link{display:inline-flex;align-items:center;min-height:44px}
+  .card-action{min-height:44px;padding-bottom:0}
+  .bag-card h3 a{display:inline-block;padding:10px 0}
+  .text-link,.back-link{min-height:44px}
+  .footer-grid nav{gap:0}
+  .footer-grid nav a{display:flex;align-items:center;min-height:44px}
+  .pagination{flex-wrap:wrap;justify-content:center;gap:6px}
+  .pagination button{height:44px;min-width:44px}
+  .breakdown li a{min-height:44px}
+  .auth-switch a,.breadcrumbs a{display:inline-flex;align-items:center;min-height:44px}
+  .category-tab{min-width:44px;padding-inline:4px}
+  .category-tab{min-height:44px}
+  .conn-retry{min-height:44px}
+  .checkbox-row{min-height:44px}
+  /* 16px stops iOS Safari from zooming the page when a field is focused */
+  .field input,.field select,.field textarea,.search-box input,.select-wrap select,.sort-control select{font-size:16px}
+}
+@media (max-width:360px){
+  .container{width:min(calc(100% - 28px),var(--container))}
+  .conn-pill{margin-left:6px;padding:6px 8px}
+}

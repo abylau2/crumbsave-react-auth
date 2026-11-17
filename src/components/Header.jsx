@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { Brand } from './Brand.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
+import { ConnectionPill, InstallButton } from './ConnectionStatus.jsx';
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -30,6 +31,7 @@ export function Header() {
   return <header className="site-header">
     <div className="container header-inner">
       <Brand onClick={close} />
+      <ConnectionPill />
       <button className="menu-toggle" type="button" aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} aria-controls="primary-navigation" onClick={() => setOpen((value) => !value)}>
         {open ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -45,6 +47,7 @@ export function Header() {
           <NavLink to="/login" onClick={close} className="nav-link">Login</NavLink>
           <NavLink to="/signup" onClick={close} className="nav-link">Signup</NavLink>
         </>}
+        <InstallButton onDone={close} />
         <Link to="/add" onClick={close} className="button button-primary header-cta">List a bag <ArrowUpRight size={16} /></Link>
       </nav>
     </div>

@@ -5,5 +5,7 @@
 @import './responsive.css';
 
 @import './routing.css';
+@import './pwa.css';
+@import './mobile.css';
 
 @import './typography.css';

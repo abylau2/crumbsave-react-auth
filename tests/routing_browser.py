@@ -110,7 +110,7 @@ with sync_playwright() as p:
         page.reload(wait_until='networkidle');expect(page.locator('main h1').first).to_be_visible()
     print('PASS Pages real 404 fallback restores nested routes, query and hash on refresh')
     page.goto(BASE+'/dashboard');expect(page.locator('.kpi')).to_have_count(6)
-    page.evaluate("""() => { const key='crumbsave:demo:v1';const state=JSON.parse(localStorage.getItem(key));state.bags=[{...state.bags[0],category:'Bakery',district:'Medeu'},{...state.bags[1],category:'Meals',district:'Almaly'}];localStorage.setItem(key,JSON.stringify(state)); }""")
+    page.evaluate("""() => { const key='crumbsave:demo:v1';const state=JSON.parse(localStorage.getItem(key));state.bags=[{...state.bags[0],id:'bag-dash-1',category:'Bakery',district:'Medeu'},{...state.bags[1],id:'bag-dash-2',category:'Meals',district:'Almaly'}];localStorage.setItem(key,JSON.stringify(state)); }""")
     page.reload();expect(page.locator('.kpi').first.locator('strong')).to_have_text('2')
     page.get_by_label('Category',exact=True).select_option('Bakery');page.get_by_label('District',exact=True).select_option('Almaly')
     expect(page.get_by_text('No listings match these filters.',exact=True)).to_be_visible()

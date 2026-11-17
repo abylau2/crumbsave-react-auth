@@ -7,3 +7,4 @@ dist/
 playwright-report/
 dist-pages/
 artifacts/
+public/api/

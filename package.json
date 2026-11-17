@@ -4,9 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generate-api.mjs",
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
-    "build:pages": "vite build --base=/crumbsave-react-auth/ --outDir dist-pages && node scripts/write-pages-fallback.mjs",
+    "prebuild": "node scripts/generate-api.mjs",
+    "build": "vite build && node scripts/build-sw.mjs dist",
+    "build:pages": "node scripts/generate-api.mjs && vite build --base=/crumbsave-react-auth/ --outDir dist-pages && node scripts/write-pages-fallback.mjs && node scripts/build-sw.mjs dist-pages",
     "preview": "vite preview --host 127.0.0.1",
     "test": "node --test tests/*.test.js"
   },
